@@ -1,0 +1,12 @@
+username,issue_key,summary,description,date_time,log_in_seconds,Link,Year,Month,Day,Hour,Minute,log_in_hours,log_in_minutes
+ajimura,MSE2324-518,Folder Deletion,MSE2324-517 solves this issue,2024-04-23 22:03:00,3600,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-518,2024,4,23,22,3,1.0,60
+ajimura,MSE2324-517,Usage of special characters on output folder and package name inputs,,2024-04-23 22:00:00,7200,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-517,2024,4,23,22,0,2.0,120
+rubencorreia,MSE2324-368,V1.0 - EG - TR 44 - Save the .docx exported from IBM Doors,,2024-04-29 19:03:00,7200,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-368,2024,4,29,19,3,2.0,120
+fmpereira,MSE2324-533,Review Confluence Documentation and Artifacts,,2024-04-24 18:59:00,3600,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-533,2024,4,24,18,59,1.0,60
+fmpereira,MSE2324-533,Review Confluence Documentation and Artifacts,,2024-04-26 16:46:00,3600,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-533,2024,4,26,16,46,1.0,60
+ajimura,MSE2324-444,V2.0 - CDG - Location of the report from the datapackage,,2024-04-23 22:17:00,1800,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-444,2024,4,23,22,17,0.5,30
+joaoteixeira,MSE2324-527,Plan Compliance Checker Initial Sprint (Create tasks),,2024-04-23 11:50:00,4200,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-527,2024,4,23,11,50,1.17,70
+dedsm,MSE2324-362,V1.0 - EG - TR47 - Save .rtf requirements,,2024-03-06 20:26:00,1800,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-362,2024,3,6,20,26,0.5,30
+dedsm,MSE2324-362,V1.0 - EG - TR47 - Save .rtf requirements,,2024-03-11 20:07:00,57600,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-362,2024,3,11,20,7,16.0,960
+dedsm,MSE2324-362,V1.0 - EG - TR47 - Save .rtf requirements,,2024-03-18 19:24:00,14400,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-362,2024,3,18,19,24,4.0,240
+dedsm,MSE2324-362,V1.0 - EG - TR47 - Save .rtf requirements,,2024-04-22 18:58:00,14400,https://studio.mse.dei.uc.pt/jira/browse/MSE2324-362,2024,4,22,18,58,4.0,240
