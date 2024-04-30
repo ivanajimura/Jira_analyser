@@ -2,7 +2,12 @@ files_path = r"files"
 output_path = r"output"
 input_file_name = "jira_export.csv"
 
+
 # JIRA
+jira_instance_url = "https://studio.mse.dei.uc.pt/jira/"
+jira_project = "MSE23-24"
+csv_download_prefix = "https://studio.mse.dei.uc.pt/jira/sr/jira.issueviews:searchrequest-csv-all-fields/temp/SearchRequest.csv?"
+
 jira_summary_col_name = "Summary"
 jira_key_col_name = "Issue key"
 jira_log_work_col_name = "Log Work"

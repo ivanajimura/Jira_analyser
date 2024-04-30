@@ -1,6 +1,7 @@
 import os
 
 class FileHelper:
+    @staticmethod
     def concatenate_path_and_filename(folder_path: str, filename: str) -> str:
         """
         Concatenate a folder path and a file name.
