@@ -18,6 +18,7 @@ class Pandas:
         df: pd.DataFrame = pd.read_csv(file_path)
         return df
 
+    @staticmethod
     def extract_work_log_columns(df: pd.DataFrame) -> pd.DataFrame:
         """
         Extract specific columns (Summary, Issue key, Log Work) from the Jira DataFrame.
@@ -38,6 +39,7 @@ class Pandas:
         
         return extracted_df
 
+    @staticmethod
     def extract_work_logs(df: pd.DataFrame) -> pd.DataFrame:
         """
         Extract work log entries from a DataFrame with multiple Log Work columns.
@@ -76,6 +78,7 @@ class Pandas:
         result_df: pd.DataFrame = pd.DataFrame(result_rows)
         return result_df
 
+    @staticmethod
     def extract_datetime_components(df: pd.DataFrame, datetime_column: str) -> pd.DataFrame:
         """
         Extract year, month, day, hour, and minute components from a datetime column in a DataFrame.
@@ -99,6 +102,7 @@ class Pandas:
         
         return df
 
+    @staticmethod
     def add_minutes_column(df: pd.DataFrame, seconds_column: str, new_column_name: str) -> pd.DataFrame:
         """
         Add a new column to the DataFrame with time in seconds converted to minutes (rounded down).
@@ -115,6 +119,7 @@ class Pandas:
         df[new_column_name] = df[new_column_name].astype(int)  # Round down to nearest integer
         return df
 
+    @staticmethod
     def add_hours_column(df: pd.DataFrame, seconds_column: str, new_column_name: str) -> pd.DataFrame:
         """
         Add a new column to the DataFrame with time in seconds converted to hours (rounded to 2 decimal places).
@@ -131,6 +136,7 @@ class Pandas:
         df[new_column_name] = df[new_column_name].round(2)  # Round to 2 decimal places
         return df
     
+    @staticmethod
     def save_df_to_csv(df: pd.DataFrame, relative_path: str, file_name: str) -> None:
         """
         Save a DataFrame to a CSV file.
@@ -152,6 +158,7 @@ class Pandas:
         # Save the DataFrame to CSV
         df.to_csv(file_path, index=False)
 
+    @staticmethod
     def process_work_log(df: pd.DataFrame, group_by_col: str, orig_time_col: str, orig_date_col: str) -> pd.DataFrame:
         """
         Process the work log DataFrame to generate a new DataFrame with aggregated information.
@@ -176,6 +183,7 @@ class Pandas:
         
         return aggregated_df
 
+    @staticmethod
     def rename_columns(df: pd.DataFrame, mapping: dict) -> pd.DataFrame:
         """
         Rename columns of a DataFrame based on a mapping dictionary.
@@ -190,6 +198,7 @@ class Pandas:
         df = df.rename(columns=mapping)
         return df
     
+    @staticmethod
     def add_combined_column(df: pd.DataFrame, source_column: str, fixed_value: str, new_column_name: str) -> pd.DataFrame:
         """
         Add a new column to a DataFrame by combining a fixed value with a value from an existing column.
@@ -206,6 +215,7 @@ class Pandas:
         df[new_column_name] = fixed_value + df[source_column]
         return df
 
+    @staticmethod
     def select_columns(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
         """
         Select and return only the specified columns from a DataFrame.
@@ -219,6 +229,7 @@ class Pandas:
         """
         return df[columns]
 
+    @staticmethod
     def aggregate_by_column(df: pd.DataFrame, group_by_column: str, agg_functions: dict[str, str]) -> pd.DataFrame:
         """
         Aggregate a DataFrame by a certain column using specified aggregation functions.
@@ -234,6 +245,7 @@ class Pandas:
         """
         return df.groupby(group_by_column).agg(agg_functions).reset_index()
     
+    @staticmethod
     def join_dataframes(df1: pd.DataFrame, df2: pd.DataFrame, on1: str, on2: str, how: str) -> pd.DataFrame:
         """
         Join two DataFrames on different columns with a specified join type.
@@ -250,6 +262,7 @@ class Pandas:
         """
         return pd.merge(df1, df2, left_on=on1, right_on=on2, how=how)
 
+    @staticmethod
     def remove_columns(df: pd.DataFrame, columns_to_remove: list[str]) -> pd.DataFrame:
         """
         Remove specified columns from a DataFrame.
