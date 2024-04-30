@@ -29,3 +29,19 @@ class FileHelper:
             print(f"Folder '{folder_path}' created.")
         else:
             print(f"Folder '{folder_path}' already exists.")
+
+    @staticmethod
+    def remove_file(path: str, file_name: str) -> None:
+        """
+        Remove a file.
+
+        Parameters:
+        - path (str): The path to the file.
+        - file_name (str): The name of the file to be removed.
+        """
+        file_path = os.path.join(path, file_name)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"File '{file_name}' removed successfully.")
+        else:
+            print(f"File '{file_name}' does not exist.")

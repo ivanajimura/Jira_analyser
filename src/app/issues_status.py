@@ -26,5 +26,9 @@ Pd.save_df_to_csv(df = issues_status_report_df, relative_path = settings.output_
 
 #Status per User Report
 status_per_user_report_df = Pd.pivot_dataframe(df = issues_status_df, y_col = settings.jira_assignee_col_name, x_col=settings.jira_status_col_name)
-
+user_log_file = FileHelper.concatenate_path_and_filename(folder_path = settings.output_path, filename = settings.user_log_file_name)
+user_log_df = Pd.read_csv(file_path = user_log_file)
+status_per_user_report_df = Pd.join_dataframes(df1 = status_per_user_report_df, df2 = user_log_df, on1 = settings.jira_assignee_col_name, on2 = settings.username_col_name, how = "left")
+status_per_user_report_df = Pd.remove_columns(df = status_per_user_report_df, columns_to_remove = [settings.username_col_name])
 Pd.save_df_to_csv(df = status_per_user_report_df, relative_path = settings.output_path, file_name = settings.user_status_report_file_name)
+FileHelper.remove_file(path = settings.output_path, file_name = settings.user_log_file_name)
