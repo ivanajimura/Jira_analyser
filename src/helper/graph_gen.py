@@ -10,7 +10,7 @@ sns.set_style("whitegrid")  # Apply minimalist theme
 class Graph:
 
     @staticmethod
-    def create_bar_chart(df: pd.DataFrame, x: str, y: str, colors: dict = None) -> None:
+    def create_bar_chart(df: pd.DataFrame, x: str, y: str) -> None:
         """
         Create a bar chart using Seaborn.
 
@@ -18,23 +18,18 @@ class Graph:
         - df (pd.DataFrame): The DataFrame containing the data.
         - x (str): The column name for the x-axis.
         - y (str): The column name for the y-axis.
-        - colors (dict): A dictionary mapping category names to colors. Defaults to None.
+        - title (str): The title of the graph. Defaults to None.
         """
-        plt.figure(figsize=(10, 10))
+        plt.figure(figsize=(10, 15))
         ax = plt.gca()
         
-        if colors is None:
-            colors = {}
+        sns.barplot(data=df, x=x, y=y)
         
-        if colors:
-            palette = colors.values()
-        else:
-            palette = None
+        plt.xticks(rotation=45, fontsize=20)  # Rotate x-axis labels by 45 degrees and increase font size
+        plt.yticks(fontsize=20)  # Increase font size of y-axis labels
+        plt.xlabel(x, fontsize=20)  # Set x-axis label and increase font size
+        plt.ylabel(y, fontsize=20)  # Set y-axis label and increase font size
         
-        sns.barplot(data=df, x=x, y=y, palette=palette)
-        plt.xticks(rotation=45)  # Rotate x-axis labels by 45 degrees
-        #plt.show()
-    
 
     @staticmethod
     def create_stacked_bar_chart(df: pd.DataFrame, x: str, y_columns: list, colors: dict) -> None:
@@ -48,7 +43,7 @@ class Graph:
         - colors (dict): A dictionary mapping column names to colors.
         """
         # Set up the figure and axis
-        plt.figure(figsize=(10, 10))
+        plt.figure(figsize=(10, 15))
         ax = plt.gca()
         
         # Initialize the bottom parameter for stacking
@@ -68,24 +63,20 @@ class Graph:
                 for index, row in df.iterrows():
                     label = row[y_col]
                     if label != 0:
-                        ax.text(index, bottom[index] + label / 2, str(label), ha='center', va='center', color='black', fontweight='bold')
+                        ax.text(index, bottom[index] + label / 2, str(label), ha='center', va='center', color='black', fontweight='bold', fontsize=15)
                 
                 # Update the bottom parameter for stacking
                 bottom += df[y_col].values
         
         # Set plot labels and title
-        ax.set_xlabel(x)
-        ax.set_ylabel('Count')
-        ax.set_title('Stacked Bar Chart')
+        ax.set_xlabel(x, fontsize=20)
+        ax.set_ylabel('Count', fontsize=20)
+        plt.xticks(rotation=45, fontsize=20)  # Rotate x-axis labels by 45 degrees and increase font size
+        plt.yticks(fontsize=20)  # Increase font size of y-axis labels
+        plt.legend(fontsize=20)
         
-        # Show plot
-        plt.xticks(rotation=45)
-        plt.legend()
-        plt.tight_layout()
-        #plt.show()
-
     @staticmethod
-    def save_plot(folder_path: str, file_name: str) -> None:
+    def save_plot(folder_path: str, file_name: str, title: str = None) -> None:
         """
         Save the current plot to a specified folder path with a given file name.
 
@@ -99,6 +90,9 @@ class Graph:
         
         # Save the plot to the specified file path
         file_path = os.path.join(folder_path, file_name)
+        if title:
+            plt.title(label=title, fontsize=20)  # Add title to the graph and increase font size
+        plt.tight_layout()  # Adjust layout to prevent clipping of labels
         plt.savefig(file_path)
         plt.cla()
 
