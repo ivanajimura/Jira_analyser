@@ -276,7 +276,24 @@ class Pandas:
         """
         return df.drop(columns=columns_to_remove)
 
+    @staticmethod
+    def pivot_dataframe(df, y_col: str, x_col: str) -> pd.DataFrame:
+        """
+        Pivots two columns of a dataframe
 
+        Parameters:
+        - df (DataFrame): The DataFrame containing the issues data.
+        - assignee_col (str): The name of the column to be on the y axis.
+        - status_col (str): The name of the column to be on the x axis.
+
+        Returns:
+        - DataFrame: A DataFrame where each row corresponds to an assignee,
+                    and each column corresponds to a status.
+                    The values represent the count of issues in each status for each assignee.
+        """
+        grouped_df = df.groupby([y_col, x_col]).size().unstack(fill_value=0).reset_index()
+        
+        return grouped_df
 
 
 
