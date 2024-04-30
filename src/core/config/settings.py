@@ -35,16 +35,21 @@ time_hours_col_name = "log_in_hours"
 
 # User log
 latest_log_date_time_col_name = "latest_log"
+days_since_last_log_col_name = "days_since_last_log"
 total_logged_hours_col_name = "total_logged_hours"
 user_log_file_name = "user_log.csv"
 
-#Issue log
+# Issue log
 issues_log_file_name = "issue_log.csv"
 
-#Issues Status
+# Issues Status
 issues_status_file_name = "issue_status.csv"
 issue_count_col_name = "issue_count"
 issues_status_report_file_name = "issue_status_report.csv"
 user_status_report_file_name = "user_status_report.csv"
 
-
+# Graphs
+logged_hours_per_assignee_graph = "logged_hours_per_assignee.png"
+days_since_last_log_per_user_graph = "days_since_last_log_per_user.png"
+issues_status_per_user_graph = "issues_per_status_per_user.png"
+hours_and_count_per_status_graph = "logged_hours_and_count_per_status.png"

@@ -1,5 +1,9 @@
+from datetime import datetime
 import os
+import numpy as np
 import pandas as pd
+import re
+
 import src.core.config.settings as settings
 
 class Pandas:
@@ -91,7 +95,7 @@ class Pandas:
         - df (pandas DataFrame): The DataFrame with additional columns for year, month, day, hour, and minute.
         """
         # Convert the datetime column to pandas datetime object
-        df[datetime_column] = pd.to_datetime(df[datetime_column], format='%d/%b/%y %I:%M %p')
+        df[datetime_column] = pd.to_datetime(df[datetime_column], errors='coerce')
         
         # Extract year, month, day, hour, and minute components
         df['Year'] = df[datetime_column].dt.year
@@ -295,47 +299,13 @@ class Pandas:
         
         return grouped_df
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @staticmethod
+    def add_days_since_last_log_column(df: pd.DataFrame, new_column_name: str, datetime_column: str, error_value: any = 0) -> pd.DataFrame:
+        df["date"] = pd.to_datetime(df[datetime_column], errors = 'coerce').dt.date
+        today = datetime.now().date()
+        df["today"] = today
+        df[new_column_name] = np.where(df["date"].isnull(), -1, (today - df["date"]).astype(str).str.slice(0,1))
+        df = Pandas.remove_columns(df = df,columns_to_remove=["date", "today"])
+        return df
 
 
