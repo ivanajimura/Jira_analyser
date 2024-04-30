@@ -292,6 +292,7 @@ class Pandas:
                     The values represent the count of issues in each status for each assignee.
         """
         grouped_df = df.groupby([y_col, x_col]).size().unstack(fill_value=0).reset_index()
+        
         return grouped_df
 
 

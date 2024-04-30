@@ -26,4 +26,5 @@ Pd.save_df_to_csv(df = issues_status_report_df, relative_path = settings.output_
 
 #Status per User Report
 status_per_user_report_df = Pd.pivot_dataframe(df = issues_status_df, y_col = settings.jira_assignee_col_name, x_col=settings.jira_status_col_name)
+
 Pd.save_df_to_csv(df = status_per_user_report_df, relative_path = settings.output_path, file_name = settings.user_status_report_file_name)
