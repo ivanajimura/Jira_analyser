@@ -45,5 +45,6 @@ issues_log_file_name = "issue_log.csv"
 issues_status_file_name = "issue_status.csv"
 issue_count_col_name = "issue_count"
 issues_status_report_file_name = "issue_status_report.csv"
+user_status_report_file_name = "user_status_report.csv"
 
 
