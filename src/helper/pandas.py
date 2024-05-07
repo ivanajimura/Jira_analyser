@@ -300,12 +300,124 @@ class Pandas:
         return grouped_df
 
     @staticmethod
+    def pivot_dataframe_by_col(df: pd.DataFrame, y_col: str, x_col: str, value_col: str) -> pd.DataFrame:
+        """
+        Pivots two columns of a DataFrame and computes the sum of values from another column.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame containing the data.
+        - y_col (str): The name of the column to be on the y-axis.
+        - x_col (str): The name of the column to be on the x-axis.
+        - value_col (str): The name of the column whose values will be summed.
+
+        Returns:
+        - pd.DataFrame: A DataFrame where each row corresponds to a unique value in y_col,
+                        each column corresponds to a unique value in x_col,
+                        and the values represent the sum of values from value_col.
+        """
+        # Group by y_col and x_col, and sum the values in value_col
+        grouped_df = df.groupby([y_col, x_col])[value_col].sum().unstack(fill_value=0).reset_index()
+        
+        return grouped_df
+
+
+    @staticmethod
     def add_days_since_last_log_column(df: pd.DataFrame, new_column_name: str, datetime_column: str, error_value: any = 0) -> pd.DataFrame:
         df["date"] = pd.to_datetime(df[datetime_column], errors = 'coerce').dt.date
         today = datetime.now().date()
         df["today"] = today
-        df[new_column_name] = np.where(df["date"].isnull(), -1, (today - df["date"]).astype(str).str.slice(0,1))
+        df[new_column_name] = np.where(df["date"].isnull(), error_value, (today - df["date"]).astype(str).str.slice(0,1))
         df = Pandas.remove_columns(df = df,columns_to_remove=["date", "today"])
         return df
+
+    @staticmethod
+    def load_json_to_dataframe(file_path: str, values_key: str = "") -> pd.DataFrame:
+        """
+        Load a JSON file into a pandas DataFrame where each key in the "values_key" dictionary becomes a column.
+
+        Parameters:
+        - file_path (str): The file path to the JSON file.
+        - values_key (str): The key containing the "values" dictionary in the JSON file.
+
+        Returns:
+        - pd.DataFrame: The DataFrame containing the JSON data.
+        """
+        try:
+            # Load JSON file into a DataFrame
+            df = pd.read_json(file_path)
+            
+            # If the data is nested under a specific key, extract it
+            if values_key in df:
+                values_dict = df[values_key].to_list()
+                df = pd.DataFrame(values_dict)
+            
+            return df
+        except Exception as e:
+            print(f"Error loading JSON file: {e}")
+            return pd.DataFrame()  # Return an empty DataFrame in case of error
+    
+    @staticmethod
+    def get_cell_value_by_condition(df: pd.DataFrame, search_column: str, search_value: str, return_column: str) -> list:
+        """
+        Get the value of a cell in a specific column based on the value of another cell in a different column.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame to search.
+        - search_column (str): The name of the column to search.
+        - search_value (str): The value to search for in the search_column.
+        - return_column (str): The name of the column from which to return the value.
+
+        Returns:
+        - list: A list of values from the return_column that correspond to the search condition.
+        """
+        # Filter the DataFrame based on the search condition
+        filtered_df = df[df[search_column] == search_value]
+        
+        # Return the values from the return_column
+        return filtered_df[return_column].tolist()
+
+    @staticmethod
+    def remove_rows_before_datetime(df: pd.DataFrame, datetime_column: str, threshold_datetime: pd.Timestamp) -> pd.DataFrame:
+        """
+        Remove rows from a DataFrame where the values in a datetime column are before a specified datetime.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame to filter.
+        - datetime_column (str): The name of the column containing the datetime values.
+        - threshold_datetime (pd.Timestamp): The threshold datetime before which rows will be removed.
+
+        Returns:
+        - pd.DataFrame: The filtered DataFrame.
+        """
+        # Convert the datetime column to pandas datetime object
+        df[datetime_column] = pd.to_datetime(df[datetime_column])
+        
+        # Filter the DataFrame based on the condition
+        filtered_df = df[df[datetime_column] >= threshold_datetime]
+        
+        return filtered_df
+
+    @staticmethod
+    def remove_rows_by_values(df: pd.DataFrame, column: str, values_to_remove: list) -> pd.DataFrame:
+        """
+        Remove rows from a DataFrame where the specified column contains certain values.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame to filter.
+        - column (str): The name of the column to filter by.
+        - values_to_remove (list): A list of values to remove from the specified column.
+
+        Returns:
+        - pd.DataFrame: The filtered DataFrame.
+        """
+        # Filter the DataFrame based on the condition
+        filtered_df = df[~df[column].isin(values_to_remove)]
+        
+        return filtered_df
+
+
+
+
+
 
 

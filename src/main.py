@@ -10,7 +10,7 @@ FileHelper.create_folder_if_not_exists(settings.output_path)
 """
 """
 
-import src.app.get_from_jira
+#import src.app.get_from_jira
 import src.app.work_log
 import src.app.issues_status
 import src.app.graph_creator

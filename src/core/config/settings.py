@@ -18,6 +18,21 @@ jira_sprint_cols_name = "Sprint"
 jira_issue_url_prefix = "https://studio.mse.dei.uc.pt/jira/browse/"
 jira_issue_type_col_name = "Issue Type"
 jira_assignee_col_name = "Assignee"
+jira_original_estimate_col_name = "Original Estimate"
+
+jira_sprints_url = "https://studio.mse.dei.uc.pt/jira/rest/agile/1.0/board/3/sprint"
+# Sprints
+sprints_file_name = "sprints_json.json"
+sprints_df_name = "sprints.csv"
+sprints_key = "values"
+sprints_state_col = "state"
+sprint_closed_state_col = "closed"
+sprint_active_state_col = "active"
+sprint_start_date_col = "startDate"
+sprint_end_date_col = "endDate"
+sprint_name_col = "name"
+sprint_link_col = "self"
+sprint_goal_col = "goal"
 
 # Generic DataFrame settings
 issue_link_col_name = "Link"
@@ -46,10 +61,16 @@ issues_log_file_name = "issue_log.csv"
 issues_status_file_name = "issue_status.csv"
 issue_count_col_name = "issue_count"
 issues_status_report_file_name = "issue_status_report.csv"
+issues_status_report_added_value_file_name = "issue_status_report_added_value.csv"
 user_status_report_file_name = "user_status_report.csv"
+
+
+# Added value
+added_value_csv_name = "added_value_report.csv"
 
 # Graphs
 logged_hours_per_assignee_graph = "logged_hours_per_assignee.png"
 days_since_last_log_per_user_graph = "days_since_last_log_per_user.png"
 issues_status_per_user_graph = "issues_per_status_per_user.png"
 hours_and_count_per_status_graph = "logged_hours_and_count_per_status.png"
+added_value_per_status_graph = "added_value_per_user.png"
