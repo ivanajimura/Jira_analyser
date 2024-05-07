@@ -26,6 +26,7 @@ class Jira:
         return JIRA(options=options)
 
     @staticmethod
+    #Possibly already deprecated
     def collect_project_issues(jira: JIRA, project_id: str, jql_query: str = None) -> list:
         """
         Collect issues from a specific project ID based on search parameters.
