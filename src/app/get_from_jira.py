@@ -16,15 +16,5 @@ Jira.download_csv_from_jql(
     file_name=settings.input_file_name
 )
 
-# Get sprints
-
-sprint_download_link = settings.jira_sprints_url
-Jira.download_csv_from_jql(
-    username = user_config.jira_username,
-    password = user_config.jira_password,
-    csv_url = sprint_download_link,
-    folder_path = settings.files_path,
-    file_name=settings.sprints_file_name
-)
 
 

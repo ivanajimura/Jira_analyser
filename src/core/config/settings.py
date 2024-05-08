@@ -22,9 +22,11 @@ jira_original_estimate_col_name = "Original Estimate"
 
 jira_sprints_url = "https://studio.mse.dei.uc.pt/jira/rest/agile/1.0/board/3/sprint"
 # Sprints
+
 sprints_file_name = "sprints_json.json"
 sprints_df_name = "sprints.csv"
 sprints_key = "values"
+sprint_id_col = "id"
 sprints_state_col = "state"
 sprint_closed_state_col = "closed"
 sprint_active_state_col = "active"
