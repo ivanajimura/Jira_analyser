@@ -1,4 +1,6 @@
 import time
+
+from pandas import DataFrame
 import src.core.config.settings as settings
 import src.core.config.user_config as user_config
 
@@ -31,8 +33,8 @@ sprints_df = Pd.load_json_to_dataframe(
     file_path=FileHelper.concatenate_path_and_filename(
                                             folder_path = folder_path, filename= settings.sprints_file_name),
     values_key = settings.sprints_key)
-df = Pd.extract_datetime_components(df = sprints_df, datetime_column=settings.sprint_start_date_col)
-Pd.save_df_to_csv(df = sprints_df, relative_path=settings.output_path, file_name=settings.sprints_df_name)
+sprints_df: DataFrame = Pd.extract_datetime_components(df = sprints_df, datetime_column=settings.sprint_start_date_col)
+Pd.save_df_to_csv(df = sprints_df, relative_path=settings.files_path, file_name=settings.sprints_df_name)
 
 
 # Reduce columns
@@ -59,5 +61,5 @@ for sprint_id in sprint_ids:
         password = user_config.jira_password,
         csv_url = download_link,
         folder_path = settings.files_path,
-        file_name=f"issues_sprint_{sprint_id}.csv"
+        file_name=f"{settings.previous_sprints_prefix}{sprint_id}.csv"
     )

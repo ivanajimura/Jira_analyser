@@ -287,8 +287,9 @@ class Pandas:
 
         Parameters:
         - df (DataFrame): The DataFrame containing the issues data.
-        - assignee_col (str): The name of the column to be on the y axis.
-        - status_col (str): The name of the column to be on the x axis.
+        - y_col (str): column on y axis
+        - x_col (str): column on x axis
+        
 
         Returns:
         - DataFrame: A DataFrame where each row corresponds to an assignee,
@@ -300,7 +301,7 @@ class Pandas:
         return grouped_df
 
     @staticmethod
-    def pivot_dataframe_by_col(df: pd.DataFrame, y_col: str, x_col: str, value_col: str) -> pd.DataFrame:
+    def pivot_dataframe_by_col(df: pd.DataFrame, y_col: str, x_col: str, value_col: str, calculation: str =  "sum") -> pd.DataFrame:
         """
         Pivots two columns of a DataFrame and computes the sum of values from another column.
 
@@ -316,10 +317,13 @@ class Pandas:
                         and the values represent the sum of values from value_col.
         """
         # Group by y_col and x_col, and sum the values in value_col
-        grouped_df = df.groupby([y_col, x_col])[value_col].sum().unstack(fill_value=0).reset_index()
+        if calculation == "sum":
+            grouped_df = df.groupby([y_col, x_col])[value_col].sum().unstack(fill_value=0).reset_index()
+        if calculation == "mean":
+            grouped_df = df.groupby([y_col, x_col])[value_col].mean().unstack(fill_value=0).reset_index()
         
-        return grouped_df
 
+        return grouped_df
 
     @staticmethod
     def add_days_since_last_log_column(df: pd.DataFrame, new_column_name: str, datetime_column: str, error_value: any = 0) -> pd.DataFrame:
@@ -415,9 +419,77 @@ class Pandas:
         
         return filtered_df
 
+    @staticmethod
+    def read_and_concat_csv(folder_path: str, filename_prefix: str, filename_col: str = "filenumber") -> pd.DataFrame:
+        """
+        Read multiple CSV files from a folder with a common filename prefix and concatenate them into a single DataFrame.
 
+        Parameters:
+        - folder_path (str): The path to the folder containing the CSV files.
+        - filename_prefix (str): The common prefix of the CSV filenames.
 
+        Returns:
+        - pd.DataFrame: A single DataFrame containing the concatenated data from all CSV files,
+                        with an additional column indicating the source filename.
+        """
+        # Initialize an empty list to store DataFrames
+        dfs = []
 
+        # Iterate over files in the folder
+        for file in os.listdir(folder_path):
+            # Check if the file is a CSV file and starts with the specified prefix
+            if file.endswith('.csv') and file.startswith(filename_prefix):
+                # Extract the file number from the filename
+                file_number = file[len(filename_prefix):-4]  # Remove prefix and '.csv' extension
+                # Read the CSV file into a DataFrame
+                df = pd.read_csv(os.path.join(folder_path, file))
+                # Add a new column with the file number
+                df[filename_col] = file_number
+                # Append the DataFrame to the list
+                dfs.append(df)
 
+        # Concatenate all DataFrames into a single DataFrame
+        concatenated_df = pd.concat(dfs, ignore_index=True)
+        
+        return concatenated_df
 
+    @staticmethod
+    def calculate_date_difference(df: pd.DataFrame, column1: str, column2: str) -> pd.Series:
+        """
+        Calculate the date difference between two columns containing datetime strings in a DataFrame.
 
+        Parameters:
+        - df (pd.DataFrame): The DataFrame containing the datetime columns.
+        - column1 (str): The name of the first datetime column.
+        - column2 (str): The name of the second datetime column.
+
+        Returns:
+        - pd.Series: A Series containing the date differences in days.
+        """
+        # Convert datetime strings to pandas datetime objects
+        df[column1] = pd.to_datetime(df[column1], errors='coerce')
+        df[column2] = pd.to_datetime(df[column2], errors='coerce')
+        
+        # Calculate the date difference, handling NaT values
+        date_diff = (df[column1] - df[column2]).dt.days
+        
+        return date_diff
+
+    @staticmethod
+    def group_by(df: pd.DataFrame, group_col: str, value_col: str, aggregation:str = "sum") -> pd.DataFrame:
+        """
+        Groups the values of multiple columns according to the values of another column with different aggregations.
+
+        Parameters:
+        - df (DataFrame): The DataFrame containing the data.
+        - group_col (str): The column to group by.
+        - value_cols (dict[str, str]): A dictionary where keys are the columns whose values to aggregate,
+                                        and values are the corresponding aggregation functions.
+
+        Returns:
+        - DataFrame: A DataFrame where each row corresponds to a unique value in `group_col`,
+                    and the aggregated values of each `value_col` for each group.
+        """
+        
+        return df.pivot_table(index=group_col, values=value_col, aggfunc=aggregation).reset_index()
+        

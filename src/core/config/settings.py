@@ -19,10 +19,13 @@ jira_issue_url_prefix = "https://studio.mse.dei.uc.pt/jira/browse/"
 jira_issue_type_col_name = "Issue Type"
 jira_assignee_col_name = "Assignee"
 jira_original_estimate_col_name = "Original Estimate"
+jira_datetime_started_col_name = "Custom field (Date Time Started)"
+jira_datetime_concluded_col_name = "Custom field (Date Time Concluded)"
+jira_datetime_created_col_name = "Created"
+
 
 jira_sprints_url = "https://studio.mse.dei.uc.pt/jira/rest/agile/1.0/board/3/sprint"
 # Sprints
-
 sprints_file_name = "sprints_json.json"
 sprints_df_name = "sprints.csv"
 sprints_key = "values"
@@ -35,6 +38,8 @@ sprint_end_date_col = "endDate"
 sprint_name_col = "name"
 sprint_link_col = "self"
 sprint_goal_col = "goal"
+previous_sprints_prefix = "issues_sprint_"
+
 
 # Generic DataFrame settings
 issue_link_col_name = "Link"
@@ -70,9 +75,17 @@ user_status_report_file_name = "user_status_report.csv"
 # Added value
 added_value_csv_name = "added_value_report.csv"
 
+# Cycle Time
+cycle_time_csv_name = "cycle_time.csv"
+cycle_time_col = "cycle_time"
+lead_time_col = "lead_time"
+sprints_to_consider =[1, 3, 12] 
+
+
 # Graphs
 logged_hours_per_assignee_graph = "logged_hours_per_assignee.png"
 days_since_last_log_per_user_graph = "days_since_last_log_per_user.png"
 issues_status_per_user_graph = "issues_per_status_per_user.png"
 hours_and_count_per_status_graph = "logged_hours_and_count_per_status.png"
 added_value_per_status_graph = "added_value_per_user.png"
+cycle_lead_time_graph = "cycle_lead_time.png"

@@ -8,10 +8,7 @@ jira_input_file_name = settings.input_file_name
 
 
 # Sprints
-sprints_df = Pd.load_json_to_dataframe(
-    file_path=FileHelper.concatenate_path_and_filename(
-                                            folder_path = folder_path, filename= settings.sprints_file_name),
-    values_key = settings.sprints_key)
+sprints_df = Pd.read_csv(file_path= FileHelper.concatenate_path_and_filename(folder_path=folder_path, filename=settings.sprints_df_name))
 
 #sprints_df = Pd.extract_datetime_components(df = sprints_df, datetime_column=settings.sprint_start_date_col)
 #Pd.save_df_to_csv(df = sprints_df, relative_path=settings.output_path, file_name=settings.sprints_df_name) ## moved to previous_sprints.py
