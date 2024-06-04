@@ -1,3 +1,7 @@
+from datetime import datetime
+current_dateTime = datetime.now()
+
+
 files_path = r"files"
 output_path = r"output"
 input_file_name = "jira_export.csv"
@@ -83,9 +87,9 @@ sprints_to_consider =[1, 3, 12]
 
 
 # Graphs
-logged_hours_per_assignee_graph = "logged_hours_per_assignee.png"
-days_since_last_log_per_user_graph = "days_since_last_log_per_user.png"
-issues_status_per_user_graph = "issues_per_status_per_user.png"
-hours_and_count_per_status_graph = "logged_hours_and_count_per_status.png"
-added_value_per_status_graph = "added_value_per_user.png"
-cycle_lead_time_graph = "cycle_lead_time.png"
+logged_hours_per_assignee_graph = f"logged_hours_per_assignee-{current_dateTime}.png"
+days_since_last_log_per_user_graph = f"days_since_last_log_per_user-{current_dateTime}.png"
+issues_status_per_user_graph = f"issues_per_status_per_user-{current_dateTime}.png"
+hours_and_count_per_status_graph = f"logged_hours_and_count_per_status-{current_dateTime}.png"
+added_value_per_status_graph = f"added_value_per_user-{current_dateTime}.png"
+cycle_lead_time_graph = f"cycle_lead_time-{current_dateTime}.png"
