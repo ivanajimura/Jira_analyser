@@ -1,7 +1,8 @@
 from src.helper.pandas import Pandas as Pd
 from src.helper.file_helper import FileHelper
 import core.config.settings as settings
-from datetime import datetime
+from datetime import datetime, timedelta
+
 folder_path = settings.files_path
 work_log_file_name = settings.work_log_file_name
 jira_input_file_name = settings.input_file_name
@@ -14,17 +15,32 @@ sprints_df = Pd.read_csv(file_path= FileHelper.concatenate_path_and_filename(fol
 #Pd.save_df_to_csv(df = sprints_df, relative_path=settings.output_path, file_name=settings.sprints_df_name) ## moved to previous_sprints.py
 
 # Get start date of current sprint
+"""
 sprint_start_year = Pd.get_cell_value_by_condition(
     df = sprints_df, search_column = "state", search_value="active", return_column="Year"
 )[0]
+
 sprint_start_month = Pd.get_cell_value_by_condition(
     df = sprints_df, search_column = "state", search_value="active", return_column="Month"
 )[0]
 sprint_start_day = Pd.get_cell_value_by_condition(
     df = sprints_df, search_column = "state", search_value="active", return_column="Day"
 )[0]
-sprint_start_date = datetime(year=sprint_start_year, month=sprint_start_month, day=sprint_start_day)
 
+sprint_start_date = datetime(year = 2024, month = 6, day = 3)
+"""
+
+sprint_start_year = Pd.get_cell_value_by_condition(
+    df = sprints_df, search_column = "id", search_value = settings.selected_sprint, return_column = "Year"
+    )[0]
+sprint_start_month = Pd.get_cell_value_by_condition(
+    df = sprints_df, search_column = "id", search_value = settings.selected_sprint, return_column = "Month"
+    )[0]
+sprint_start_day = Pd.get_cell_value_by_condition(
+    df = sprints_df, search_column = "id", search_value = settings.selected_sprint, return_column = "Day"
+    )[0]
+sprint_start_date: datetime = datetime(year=sprint_start_year, month=sprint_start_month, day=sprint_start_day)
+sprint_end_date: datetime = sprint_start_date + timedelta(days = 14)
 
 jira_export_file: str = FileHelper.concatenate_path_and_filename(folder_path = folder_path, filename = jira_input_file_name)
 complete_issues_df = Pd.read_csv(file_path=jira_export_file)
@@ -37,7 +53,10 @@ work_log_df = Pd.add_combined_column(df = work_log_df, source_column = settings.
 work_log_df = Pd.extract_datetime_components(df = work_log_df, datetime_column = settings.date_time_col_name)
 work_log_df = Pd.add_hours_column(df = work_log_df, seconds_column = settings.time_seconds_col_name, new_column_name = settings.time_hours_col_name)
 work_log_df = Pd.add_minutes_column(df = work_log_df, seconds_column = settings.time_seconds_col_name, new_column_name = settings.time_minutes_col_name)
-work_log_df = Pd.remove_rows_before_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_start_date)
+#work_log_df = Pd.remove_rows_before_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_start_date)
+#work_log_df = Pd.remove_rows_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_end_date)
+work_log_df = Pd.remove_rows_before_or_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_start_date, before_or_after='before')
+work_log_df = Pd.remove_rows_before_or_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_end_date, before_or_after='after')
 ### get estimate for each issue
 work_log_df = Pd.join_dataframes(df1=work_log_df, df2=complete_issues_df, on1=settings.issue_key_col_name, on2 = settings.jira_key_col_name, how="left")
 columns_to_keep = [

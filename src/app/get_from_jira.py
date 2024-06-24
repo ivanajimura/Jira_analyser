@@ -4,8 +4,8 @@ from src.service.jira import Jira
 
 jira = Jira.connect_to_jira(jira_instance = user_config.jira_instance, token = user_config.jira_token)
 
-# Get Issues
-current_sprint_query: str = f"project='{settings.jira_project}' AND sprint in openSprints()"
+
+current_sprint_query: str = f"project='{settings.jira_project}' AND sprint = {settings.selected_sprint}"
 download_link = Jira.parse_jql_into_url(jql_query = current_sprint_query, base_url= settings.csv_download_prefix)
 
 Jira.download_csv_from_jql(

@@ -1,5 +1,7 @@
 from datetime import datetime
 import os
+import sys
+from typing import Literal
 import numpy as np
 import pandas as pd
 import re
@@ -381,6 +383,7 @@ class Pandas:
         return filtered_df[return_column].tolist()
 
     @staticmethod
+    @DeprecationWarning
     def remove_rows_before_datetime(df: pd.DataFrame, datetime_column: str, threshold_datetime: pd.Timestamp) -> pd.DataFrame:
         """
         Remove rows from a DataFrame where the values in a datetime column are before a specified datetime.
@@ -400,6 +403,59 @@ class Pandas:
         filtered_df = df[df[datetime_column] >= threshold_datetime]
         
         return filtered_df
+
+    @staticmethod
+    @DeprecationWarning
+    def remove_rows_after_datetime(df: pd.DataFrame, datetime_column: str, threshold_datetime: pd.Timestamp) -> pd.DataFrame:
+        """
+        Remove rows from a DataFrame where the values in a datetime column are after a specified datetime.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame to filter.
+        - datetime_column (str): The name of the column containing the datetime values.
+        - threshold_datetime (pd.Timestamp): The threshold datetime before which rows will be removed.
+
+        Returns:
+        - pd.DataFrame: The filtered DataFrame.
+        """
+        # Convert the datetime column to pandas datetime object
+        df[datetime_column] = pd.to_datetime(df[datetime_column])
+        
+        # Filter the DataFrame based on the condition
+        filtered_df = df[df[datetime_column] <= threshold_datetime]
+        
+        return filtered_df
+    
+    @staticmethod
+    def remove_rows_before_or_after_datetime(df: pd.DataFrame, datetime_column: str, threshold_datetime: pd.Timestamp, before_or_after: Literal['before', 'after']) -> pd.DataFrame:
+        """
+        Remove rows from a DataFrame where the values in a datetime column are after a specified datetime.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame to filter.
+        - datetime_column (str): The name of the column containing the datetime values.
+        - threshold_datetime (pd.Timestamp): The threshold datetime before which rows will be removed.
+        - before_or_after (str): Accepts 'before' or 'after'
+
+        Returns:
+        - pd.DataFrame: The filtered DataFrame.
+        """
+
+        if before_or_after.lower() not in ['before', 'after']:
+            print("Wrong parameter for before_or_after. Must be either 'before' or 'after'. We even accept capitalization! Correct this and run the code again.")
+            sys.exit()
+
+        # Convert the datetime column to pandas datetime object
+        df[datetime_column] = pd.to_datetime(df[datetime_column])
+        
+        # Filter the DataFrame based on the condition
+        if before_or_after.lower() == 'before':
+            filtered_df = df[df[datetime_column] >= threshold_datetime]
+        elif before_or_after.lower() == 'after':
+            filtered_df = df[df[datetime_column] <= threshold_datetime]
+        
+        return filtered_df
+
 
     @staticmethod
     def remove_rows_by_values(df: pd.DataFrame, column: str, values_to_remove: list) -> pd.DataFrame:
