@@ -62,3 +62,10 @@ Graph.save_plot(folder_path=settings.output_path, file_name=settings.subtasks_pe
 x_values = Pd.list_unique_values_in_col(df = sprint_df, column = settings.sprint_id_col)
 Graph.create_multi_bar_chart(df = sprint_df, x_column=settings.sprint_id_col, x_values=x_values, y_columns=[settings.number_tasks, settings.number_subtasks])
 Graph.save_plot(folder_path=settings.output_path, file_name=settings.tasks_subtasks_per_sprint_graph, title = "Number of Tasks and Subtasks per Sprint")
+
+##Total Subtasks per Assignee
+subtasks_per_assignee_file = FileHelper.concatenate_path_and_filename(folder_path=settings.output_path, filename=settings.total_subtasks_per_assignee_csv)
+total_subtasks_df = Pd.read_csv(file_path=subtasks_per_assignee_file)
+Graph.create_bar_chart(df = total_subtasks_df, x = settings.jira_assignee_col_name, y = settings.number_subtasks)
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.total_subtasks_per_assignee_graph, title = "Total Subtasks per Assignee")
+

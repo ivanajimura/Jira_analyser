@@ -594,6 +594,24 @@ class Pandas:
         """        
         return df[column].unique().tolist()
 
+    @staticmethod
+    def create_df_from_list(value_list: list, col_name: str) -> pd.DataFrame:
+        """ Creates df with a single column.
+
+        Args:
+            value_list (list): list of values to insert in df
+            col_name (str): name of the column
+
+        Returns:
+            pd.DataFrame: pandas dataframe
+        """        
+        df = pd.DataFrame(value_list, columns=[col_name])
+        return df
+
+    @staticmethod
+    def create_df_from_list_of_dicts(list_of_dicts: list) -> pd.DataFrame:
+        return pd.DataFrame.from_dict(list_of_dicts) 
+
 
 
 

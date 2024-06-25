@@ -96,7 +96,9 @@ number_subtasks = "n subtasks"
 subtask_issue_type = "Sub-task"
 n_subtasks_per_task = "n subtasks per task"
 valid_issue_types = ["Task", "Bug", "Story"]
-
+assignee_list = ["ajimura", "dedsm", "fmpereira", "gabrielnunes", "jmsp", "joaoteixeira", "rubencorreia"]
+subtasks_per_assignee_per_sprint_csv = "tasks_subtasks_per_assignee_per_sprint.csv"
+total_subtasks_per_assignee_csv = "total_subtasks_per_assignee.csv"
 
 # Graphs
 logged_hours_per_assignee_graph = f"logged_hours_per_assignee-{current_dateTime}.png"
@@ -108,3 +110,6 @@ cycle_lead_time_graph = f"cycle_lead_time-{current_dateTime}.png"
 subtasks_per_task_per_sprint_graph = f"n_subtasks_per_task_per_sprint-{current_dateTime}.png"
 subtasks_per_sprint_graph = f"n_subtasks_per_sprint-{current_dateTime}.png"
 tasks_subtasks_per_sprint_graph = f"n_tasks_subtasks_per_sprint-{current_dateTime}.png"
+total_subtasks_per_assignee_graph = f"Total_subtasks_per_assignee-{current_dateTime}.png"
+
+
