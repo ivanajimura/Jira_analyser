@@ -40,7 +40,7 @@ sprint_start_day = Pd.get_cell_value_by_condition(
     df = sprints_df, search_column = "id", search_value = settings.selected_sprint, return_column = "Day"
     )[0]
 sprint_start_date: datetime = datetime(year=sprint_start_year, month=sprint_start_month, day=sprint_start_day)
-sprint_end_date: datetime = sprint_start_date + timedelta(days = 14)
+sprint_end_date: datetime = sprint_start_date + timedelta(days = 14) #TODO improve this
 
 jira_export_file: str = FileHelper.concatenate_path_and_filename(folder_path = folder_path, filename = jira_input_file_name)
 complete_issues_df = Pd.read_csv(file_path=jira_export_file)

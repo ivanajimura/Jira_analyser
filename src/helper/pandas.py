@@ -549,3 +549,51 @@ class Pandas:
         
         return df.pivot_table(index=group_col, values=value_col, aggfunc=aggregation).reset_index()
         
+    @staticmethod
+    def value_counts( df: pd.DataFrame, column: str, value_to_count: any) -> int:
+        """Counts value occurrences in a column
+
+        Args:
+            df (pd.DataFrame): df to count
+            column (str): selected column
+            value_to_count (any): value to be counted. Should work with any data type
+
+        Returns:
+            int: number of occurrences of the value_to_count
+        """        
+        return df[column].value_counts()[value_to_count]
+
+    @staticmethod
+    def set_value_by_condition(df: pd.DataFrame, column_to_change: str, column_to_search: str, search_value: any, value_to_set: any) -> pd.DataFrame:
+        """Sets value in cell based on condition (on the same or different col)
+
+        Args:
+            df (pd.DataFrame): df to read
+            column_to_change (str): col to change value
+            column_to_search (str): col to search for value
+            search_value (any): value to be searched in column_to_search
+            value_to_set (any): new value in column_to_change
+
+        Returns:
+            pd.DataFrame: the whole df
+        """        
+        df[column_to_change].mask(df[column_to_search] == search_value, value_to_set, inplace = True)
+        return df
+
+
+    @staticmethod
+    def list_unique_values_in_col(df: pd.DataFrame, column: str) -> list:
+        """Lists unique values in a col in a df
+
+        Args:
+            df (pd.DataFrame): df to search
+            column (str): col to search
+
+        Returns:
+            list: 
+        """        
+        return df[column].unique().tolist()
+
+
+
+

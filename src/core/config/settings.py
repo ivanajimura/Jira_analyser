@@ -1,6 +1,8 @@
 from datetime import datetime
 
-selected_sprint = 15
+selected_sprint = 14        # select sprint number here
+
+sprint_duration_days = 14
 current_dateTime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 
@@ -88,6 +90,13 @@ cycle_time_col = "cycle_time"
 lead_time_col = "lead_time"
 sprints_to_consider =[1, 3, 12] 
 
+#Sub-tasks
+number_tasks = "n tasks"
+number_subtasks = "n subtasks"
+subtask_issue_type = "Sub-task"
+n_subtasks_per_task = "n subtasks per task"
+valid_issue_types = ["Task", "Bug", "Story"]
+
 
 # Graphs
 logged_hours_per_assignee_graph = f"logged_hours_per_assignee-{current_dateTime}.png"
@@ -96,3 +105,6 @@ issues_status_per_user_graph = f"issues_per_status_per_user-{current_dateTime}.p
 hours_and_count_per_status_graph = f"logged_hours_and_count_per_status-{current_dateTime}.png"
 added_value_per_status_graph = f"added_value_per_user-{current_dateTime}.png"
 cycle_lead_time_graph = f"cycle_lead_time-{current_dateTime}.png"
+subtasks_per_task_per_sprint_graph = f"n_subtasks_per_task_per_sprint-{current_dateTime}.png"
+subtasks_per_sprint_graph = f"n_subtasks_per_sprint-{current_dateTime}.png"
+tasks_subtasks_per_sprint_graph = f"n_tasks_subtasks_per_sprint-{current_dateTime}.png"

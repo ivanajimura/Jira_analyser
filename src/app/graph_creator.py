@@ -45,3 +45,20 @@ cycle_lead_time_df = Pd.read_csv(file_path=cycle_lead_time_file)
 y_columns = [settings.cycle_time_col, settings.lead_time_col]
 Graph.create_multi_bar_chart(df = cycle_lead_time_df, x_column=settings.sprint_id_col, x_values=settings.sprints_to_consider,y_columns=y_columns)
 Graph.save_plot(folder_path=settings.output_path, file_name=settings.cycle_lead_time_graph, title= "Cycle and Lead Time per Sprint")
+
+
+# Subtasks per Sprint
+## Subtasks per Task per Sprint
+sprints_file = FileHelper.concatenate_path_and_filename(folder_path = settings.files_path, filename = settings.sprints_df_name)
+sprint_df = Pd.read_csv(file_path = sprints_file)
+Graph.create_bar_chart(df = sprint_df, x = settings.sprint_id_col, y = settings.n_subtasks_per_task)
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.subtasks_per_task_per_sprint_graph, title = "Average Number of Subtasks per Task per Sprint")
+
+## Subtasks per Sprint
+Graph.create_bar_chart(df = sprint_df, x = settings.sprint_id_col, y = settings.number_subtasks)
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.subtasks_per_sprint_graph, title = "Number of Subtasks per Sprint")
+
+## Tasks and Subtasks per Sprint
+x_values = Pd.list_unique_values_in_col(df = sprint_df, column = settings.sprint_id_col)
+Graph.create_multi_bar_chart(df = sprint_df, x_column=settings.sprint_id_col, x_values=x_values, y_columns=[settings.number_tasks, settings.number_subtasks])
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.tasks_subtasks_per_sprint_graph, title = "Number of Tasks and Subtasks per Sprint")
