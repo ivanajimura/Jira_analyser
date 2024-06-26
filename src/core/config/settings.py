@@ -1,6 +1,6 @@
 from datetime import datetime
 
-selected_sprint = 15        # select sprint number here
+selected_sprint = 12        # select sprint number here
 
 sprint_duration_days = 14       # not being used because of Jira's weird way of saving work log time
 current_dateTime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

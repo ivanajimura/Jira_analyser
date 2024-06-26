@@ -51,6 +51,7 @@ sprints_df = sprints_df[columns_to_keep]
 
 # Download issues from other sprints
 sprint_ids = sprints_df[settings.sprint_id_col].unique().tolist()
+sprint_ids = [x for x in sprint_ids if x <= settings.selected_sprint]
 
 for sprint_id in sprint_ids:
     time.sleep(2)

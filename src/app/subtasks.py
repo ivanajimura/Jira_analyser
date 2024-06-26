@@ -26,6 +26,7 @@ sprints_df[tasks_col] = 0
 sprints_df[subtasks_col] = 0
 ## Add data to new columns
 sprint_ids = sprints_df[settings.sprint_id_col].unique().tolist()
+sprint_ids = [x for x in sprint_ids if x <= settings.selected_sprint]
 for sprint_id in sprint_ids:
     #Open corresponding sprint csv
     cur_sprint_file_name=f"{settings.previous_sprints_prefix}{sprint_id}.csv"

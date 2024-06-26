@@ -13,6 +13,8 @@ list_of_dicts = []
 df_sprints_file: str = FileHelper.concatenate_path_and_filename(folder_path = settings.files_path, filename = settings.sprints_df_name)
 sprints_df = Pd.read_csv(file_path=df_sprints_file)
 sprint_ids = sprints_df[settings.sprint_id_col].unique().tolist()
+sprint_ids = [x for x in sprint_ids if x <= settings.selected_sprint]
+
 cols_to_keep: list[str] = [
                         settings.jira_summary_col_name,
                         settings.jira_key_col_name,
