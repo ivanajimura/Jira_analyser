@@ -29,7 +29,13 @@ color_mapping = {"Rejected": "silver", "To Refine": "gray", "Ready to Develop": 
 Graph.create_stacked_bar_chart(df=added_value_df, x = settings.jira_assignee_col_name, y_columns = y_columns, colors=color_mapping)
 Graph.save_plot(folder_path=settings.output_path, file_name=settings.added_value_per_status_graph, title= "Added Value per User")
 
-
+# Added value per Sprint
+av_per_sprint_file = FileHelper.concatenate_path_and_filename(folder_path=settings.output_path, filename=settings.added_value_per_sprint_csv_name)
+av_per_sprint_df = Pd.read_csv(file_path=av_per_sprint_file)
+y_columns = [settings.jira_ready, settings.jira_in_progress, settings.jira_done]
+color_mapping = {settings.jira_ready: "dimgray", settings.jira_in_progress: "skyblue", settings.jira_done: "lime"}
+Graph.create_stacked_bar_chart(df = av_per_sprint_df, x = settings.sprint_id_col, y_columns=y_columns, colors=color_mapping)
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.added_value_per_sprint_graph, title= "Added Value per Sprint")
 
 # Logged Hours, Added Value and Number of issues per status
 added_value_report_file: str = FileHelper.concatenate_path_and_filename(folder_path=settings.output_path, filename=settings.added_value_csv_name)   

@@ -56,7 +56,8 @@ work_log_df = Pd.add_minutes_column(df = work_log_df, seconds_column = settings.
 #work_log_df = Pd.remove_rows_before_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_start_date)
 #work_log_df = Pd.remove_rows_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_end_date)
 work_log_df = Pd.remove_rows_before_or_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_start_date, before_or_after='before')
-work_log_df = Pd.remove_rows_before_or_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_end_date, before_or_after='after')
+#Remove after not being used because work log in Jira is saved with the date when the log is made, not the day defined by the user
+#work_log_df = Pd.remove_rows_before_or_after_datetime(df = work_log_df, datetime_column= settings.date_time_col_name, threshold_datetime=sprint_end_date, before_or_after='after')
 ### get estimate for each issue
 work_log_df = Pd.join_dataframes(df1=work_log_df, df2=complete_issues_df, on1=settings.issue_key_col_name, on2 = settings.jira_key_col_name, how="left")
 columns_to_keep = [

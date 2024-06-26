@@ -1,8 +1,8 @@
 from datetime import datetime
 
-selected_sprint = 14        # select sprint number here
+selected_sprint = 15        # select sprint number here
 
-sprint_duration_days = 14
+sprint_duration_days = 14       # not being used because of Jira's weird way of saving work log time
 current_dateTime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 
@@ -80,9 +80,19 @@ issues_status_report_file_name = "issue_status_report.csv"
 issues_status_report_added_value_file_name = "issue_status_report_added_value.csv"
 user_status_report_file_name = "user_status_report.csv"
 
+#Issue Status Names
+jira_to_refine = "To Refine"
+jira_ready = "Ready to Develop"
+jira_in_progress = "In Progress"
+jira_done = "Done"
+jira_review = "In Review"
+jira_blocked = "Blocked"
+
+
 
 # Added value
 added_value_csv_name = "added_value_report.csv"
+added_value_per_sprint_csv_name = "added_value_per_sprint.csv"
 
 # Cycle Time
 cycle_time_csv_name = "cycle_time.csv"
@@ -106,6 +116,7 @@ days_since_last_log_per_user_graph = f"days_since_last_log_per_user-{current_dat
 issues_status_per_user_graph = f"issues_per_status_per_user-{current_dateTime}.png"
 hours_and_count_per_status_graph = f"logged_hours_and_count_per_status-{current_dateTime}.png"
 added_value_per_status_graph = f"added_value_per_user-{current_dateTime}.png"
+added_value_per_sprint_graph = f"added_value_per_sprint-{current_dateTime}.png"
 cycle_lead_time_graph = f"cycle_lead_time-{current_dateTime}.png"
 subtasks_per_task_per_sprint_graph = f"n_subtasks_per_task_per_sprint-{current_dateTime}.png"
 subtasks_per_sprint_graph = f"n_subtasks_per_sprint-{current_dateTime}.png"

@@ -6,6 +6,55 @@ folder_path: str = settings.files_path
 issues_status_file_name: str = settings.issues_status_file_name
 jira_input_file_name: str = settings.input_file_name
 
+
+## Multiple Sprints
+list_of_dicts = []
+### Open files/sprints.csv
+df_sprints_file: str = FileHelper.concatenate_path_and_filename(folder_path = settings.files_path, filename = settings.sprints_df_name)
+sprints_df = Pd.read_csv(file_path=df_sprints_file)
+sprint_ids = sprints_df[settings.sprint_id_col].unique().tolist()
+cols_to_keep: list[str] = [
+                        settings.jira_summary_col_name,
+                        settings.jira_key_col_name,
+                        settings.jira_description_col_name,
+                        settings.jira_status_col_name,
+                        settings.jira_issue_type_col_name,
+                        settings.jira_assignee_col_name,
+                        settings.jira_original_estimate_col_name
+                        ]
+
+
+
+for sprint_id in sprint_ids:
+    cur_sprint_file_name=f"{settings.previous_sprints_prefix}{sprint_id}.csv"
+    cur_df_sprints_file: str = FileHelper.concatenate_path_and_filename(folder_path = settings.files_path, filename = cur_sprint_file_name)
+    df_cur_sprint = Pd.read_csv(file_path=cur_df_sprints_file)
+    df_cur_sprint[settings.jira_original_estimate_col_name] = df_cur_sprint[settings.jira_original_estimate_col_name]/3600
+    df_cur_sprint = Pd.select_columns(df = df_cur_sprint, columns= cols_to_keep)
+    grouped_df = Pd.group_by(df = df_cur_sprint, group_col= settings.jira_status_col_name, value_col=settings.jira_original_estimate_col_name, aggregation="sum")
+    #Calculate Not Started Earned Value (ev)
+    not_started_ev = 0
+    not_started_ev = not_started_ev + sum(Pd.get_cell_value_by_condition(df = grouped_df, search_column=settings.jira_status_col_name, search_value=settings.jira_to_refine, return_column=settings.jira_original_estimate_col_name))
+    not_started_ev = not_started_ev + sum(Pd.get_cell_value_by_condition(df = grouped_df, search_column=settings.jira_status_col_name, search_value=settings.jira_ready, return_column=settings.jira_original_estimate_col_name))
+    not_started_ev = round(not_started_ev)
+    #Calculate In Progress Earned Value
+    in_progress_ev = 0
+    in_progress_ev = in_progress_ev + sum(Pd.get_cell_value_by_condition(df = grouped_df, search_column=settings.jira_status_col_name, search_value=settings.jira_in_progress, return_column=settings.jira_original_estimate_col_name))
+    in_progress_ev = in_progress_ev + sum(Pd.get_cell_value_by_condition(df = grouped_df, search_column=settings.jira_status_col_name, search_value=settings.jira_blocked, return_column=settings.jira_original_estimate_col_name))
+    in_progress_ev = round(in_progress_ev)
+    #Calculate Done Earned Value
+    done_ev = 0
+    done_ev = done_ev + sum(Pd.get_cell_value_by_condition(df = grouped_df, search_column=settings.jira_status_col_name, search_value=settings.jira_done, return_column=settings.jira_original_estimate_col_name))
+    done_ev = done_ev + sum(Pd.get_cell_value_by_condition(df = grouped_df, search_column=settings.jira_status_col_name, search_value=settings.jira_review, return_column=settings.jira_original_estimate_col_name))
+    done_ev = round(done_ev)
+    total_ev = not_started_ev + in_progress_ev + done_ev
+    sprint_dict = {settings.sprint_id_col: sprint_id, settings.jira_ready: not_started_ev, settings.jira_in_progress: in_progress_ev, settings.jira_done: done_ev, "Total": total_ev}
+    list_of_dicts.append(sprint_dict)
+
+ev_per_sprint_df = Pd.create_df_from_list_of_dicts(list_of_dicts=list_of_dicts)
+Pd.save_df_to_csv(df = ev_per_sprint_df, relative_path=settings.output_path, file_name=settings.added_value_per_sprint_csv_name)
+
+
 #Issues Status
 jira_export_file: str = FileHelper.concatenate_path_and_filename(folder_path = folder_path, filename = jira_input_file_name)
 complete_issues_df = Pd.read_csv(file_path=jira_export_file)
@@ -30,6 +79,8 @@ issues_status_report_df = Pd.rename_columns(df = issues_status_report_df, mappin
 Pd.save_df_to_csv(df = issues_status_report_df, relative_path = settings.output_path, file_name = settings.issues_status_report_file_name)
 
 # Added Value Status Report
+
+## For a single sprint
 added_value_df = Pd.read_csv(file_path=jira_export_file)
 added_value_df[settings.jira_original_estimate_col_name] = added_value_df[settings.jira_original_estimate_col_name]/3600
 cols_to_keep: list[str] = [
@@ -42,6 +93,9 @@ cols_to_keep: list[str] = [
                         settings.jira_original_estimate_col_name
                         ]
 added_value_df = Pd.select_columns(df = added_value_df, columns = cols_to_keep)
+
+
+
 ### Add total_logged_hours
 added_value_df = Pd.join_dataframes(
                         df1 = added_value_df,
@@ -89,3 +143,4 @@ status_per_user_report_df = Pd.remove_columns(df = status_per_user_report_df, co
 status_per_user_report_df = Pd.add_days_since_last_log_column(df = status_per_user_report_df, new_column_name=settings.days_since_last_log_col_name, datetime_column=settings.latest_log_date_time_col_name, error_value=0)
 Pd.save_df_to_csv(df = status_per_user_report_df, relative_path = settings.output_path, file_name = settings.issues_status_report_added_value_file_name)
 FileHelper.remove_file(path = settings.output_path, file_name = settings.user_log_file_name)
+
