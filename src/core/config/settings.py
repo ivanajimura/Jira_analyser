@@ -1,6 +1,6 @@
 from datetime import datetime
 
-selected_sprint = 12        # select sprint number here
+selected_sprint = 14            # select sprint number here
 
 sprint_duration_days = 14       # not being used because of Jira's weird way of saving work log time
 current_dateTime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -93,6 +93,7 @@ jira_blocked = "Blocked"
 # Added value
 added_value_csv_name = "added_value_report.csv"
 added_value_per_sprint_csv_name = "added_value_per_sprint.csv"
+relative_added_value_per_sprint_csv_name  = "relative_added_value_per_sprint.csv"
 
 # Cycle Time
 cycle_time_csv_name = "cycle_time.csv"
@@ -117,6 +118,7 @@ issues_status_per_user_graph = f"issues_per_status_per_user-{current_dateTime}.p
 hours_and_count_per_status_graph = f"logged_hours_and_count_per_status-{current_dateTime}.png"
 added_value_per_status_graph = f"added_value_per_user-{current_dateTime}.png"
 added_value_per_sprint_graph = f"added_value_per_sprint-{current_dateTime}.png"
+rel_added_value_per_sprint_graph = f"rel_added_value_per_sprint-{current_dateTime}.png"
 cycle_lead_time_graph = f"cycle_lead_time-{current_dateTime}.png"
 subtasks_per_task_per_sprint_graph = f"n_subtasks_per_task_per_sprint-{current_dateTime}.png"
 subtasks_per_sprint_graph = f"n_subtasks_per_sprint-{current_dateTime}.png"

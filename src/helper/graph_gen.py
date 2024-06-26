@@ -30,7 +30,6 @@ class Graph:
         plt.xlabel(x, fontsize=20)  # Set x-axis label and increase font size
         plt.ylabel(y, fontsize=20)  # Set y-axis label and increase font size
         
-
     @staticmethod
     def create_stacked_bar_chart(df: pd.DataFrame, x: str, y_columns: list, colors: dict) -> None:
         """
@@ -96,7 +95,6 @@ class Graph:
         plt.savefig(file_path)
         plt.cla()
 
-
     @staticmethod
     def create_multi_bar_chart(df: pd.DataFrame, x_column: str, x_values: list, y_columns: list, colors: dict = None) -> None:
         """
@@ -145,3 +143,36 @@ class Graph:
 
         # Rotate x-axis labels by 45 degrees
         plt.xticks(rotation=45)
+
+    @staticmethod
+    def create_line_graph(df: pd.DataFrame, x_col: str, y_cols: list, colors: dict, title: str = None, x_label: str = None, y_label: str = None, figsize: tuple = (10, 6)) -> None:
+        """
+        Create a line graph using Seaborn.
+
+        Parameters:
+        - df (pd.DataFrame): The DataFrame containing the data.
+        - x_col (str): The column name for the x-axis.
+        - y_cols (list): A list of column names for the y-axis.
+        - colors (dict): A dictionary where keys are the y-axis column names and values are the colors.
+        - title (str): The title of the graph. Defaults to None.
+        - x_label (str): The label for the x-axis. Defaults to None.
+        - y_label (str): The label for the y-axis. Defaults to None.
+        - figsize (tuple): The size of the figure. Defaults to (10, 6).
+        """
+        plt.figure(figsize=figsize)
+        
+        for y_col in y_cols:
+            color = colors.get(y_col, None)
+            sns.lineplot(data=df, x=x_col, y=y_col, label=y_col, color=color)
+        
+        if title:
+            plt.title(title, fontsize=16, fontweight='bold')
+        if x_label:
+            plt.xlabel(x_label, fontsize=14)
+        if y_label:
+            plt.ylabel(y_label, fontsize=14)
+        
+        plt.legend(title='Legend', fontsize=12)
+        plt.xticks(rotation=45, fontsize=12)
+        plt.yticks(fontsize=12)
+        plt.tight_layout() 

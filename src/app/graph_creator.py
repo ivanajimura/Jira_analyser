@@ -37,6 +37,14 @@ color_mapping = {settings.jira_ready: "dimgray", settings.jira_in_progress: "sky
 Graph.create_stacked_bar_chart(df = av_per_sprint_df, x = settings.sprint_id_col, y_columns=y_columns, colors=color_mapping)
 Graph.save_plot(folder_path=settings.output_path, file_name=settings.added_value_per_sprint_graph, title= "Added Value per Sprint")
 
+# Added value per Sprint (Relative)
+rel_av_per_sprint_file = FileHelper.concatenate_path_and_filename(folder_path=settings.output_path, filename=settings.relative_added_value_per_sprint_csv_name)
+rel_av_per_sprint_df = Pd.read_csv(file_path=rel_av_per_sprint_file)
+y_columns = [settings.jira_ready, settings.jira_in_progress, settings.jira_done]
+color_mapping = {settings.jira_ready: "dimgray", settings.jira_in_progress: "skyblue", settings.jira_done: "lime"}
+Graph.create_line_graph(df = rel_av_per_sprint_df, x_col = settings.sprint_id_col, y_cols = y_columns, colors = color_mapping, x_label = "Sprint", y_label = "%")
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.rel_added_value_per_sprint_graph, title= "Relative Added Value per Sprint")
+
 # Logged Hours, Added Value and Number of issues per status
 added_value_report_file: str = FileHelper.concatenate_path_and_filename(folder_path=settings.output_path, filename=settings.added_value_csv_name)   
 added_value_report_df = Pd.read_csv(file_path = added_value_report_file)
