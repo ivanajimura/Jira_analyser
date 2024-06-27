@@ -63,6 +63,7 @@ work_log_description_col_name = "description"
 time_seconds_col_name = "log_in_seconds"
 time_minutes_col_name = "log_in_minutes"
 time_hours_col_name = "log_in_hours"
+work_log_per_sprint_file_name = "work_log_per_sprint.csv"
 
 # User log
 latest_log_date_time_col_name = "latest_log"
@@ -113,6 +114,7 @@ total_subtasks_per_assignee_csv = "total_subtasks_per_assignee.csv"
 
 # Graphs
 logged_hours_per_assignee_graph = f"logged_hours_per_assignee-{current_dateTime}.png"
+wl_per_sprint_graph = f"logged_hours_per_sprint-{current_dateTime}.png"
 days_since_last_log_per_user_graph = f"days_since_last_log_per_user-{current_dateTime}.png"
 issues_status_per_user_graph = f"issues_per_status_per_user-{current_dateTime}.png"
 hours_and_count_per_status_graph = f"logged_hours_and_count_per_status-{current_dateTime}.png"

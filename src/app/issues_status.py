@@ -63,7 +63,7 @@ for sprint_dict in list_of_dicts:
     sprint_dict[settings.jira_in_progress] = round(sprint_dict[settings.jira_in_progress]/sprint_dict["Total"],2)*100
     sprint_dict[settings.jira_done] = round(sprint_dict[settings.jira_done]/sprint_dict["Total"],2)*100
     list_of_dicts_relative.append(sprint_dict)
-    print(sprint_dict)
+    #print(sprint_dict)
 ev_per_sprint_rel_df = Pd.create_df_from_list_of_dicts(list_of_dicts=list_of_dicts_relative)
 Pd.save_df_to_csv(df = ev_per_sprint_rel_df, relative_path=settings.output_path, file_name=settings.relative_added_value_per_sprint_csv_name)
 

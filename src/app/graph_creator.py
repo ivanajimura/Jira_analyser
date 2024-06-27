@@ -11,6 +11,13 @@ hour_user_df = Pd.read_csv(file_path = hour_user_file)
 Graph.create_bar_chart(df = hour_user_df, x = settings.jira_assignee_col_name, y = settings.total_logged_hours_col_name)
 Graph.save_plot(folder_path=settings.output_path, file_name=settings.logged_hours_per_assignee_graph, title= "Logged Hours per Person")
 
+# Work Log per sprint
+wl_per_sprint_file: str = FileHelper.concatenate_path_and_filename(folder_path=settings.output_path, filename=settings.work_log_per_sprint_file_name)   
+wl_per_sprint_df = Pd.read_csv(file_path = wl_per_sprint_file)
+Graph.create_line_graph(df = wl_per_sprint_df, x_col=settings.sprint_id_col, y_cols=[settings.time_hours_col_name], colors={settings.time_hours_col_name: "skyblue" })
+Graph.save_plot(folder_path=settings.output_path, file_name=settings.wl_per_sprint_graph, title= "Logged Hours per Sprint")
+
+
 # Days since Last Work Log
 Graph.create_bar_chart(df = hour_user_df, x = settings.jira_assignee_col_name, y = settings.days_since_last_log_col_name)
 Graph.save_plot(folder_path=settings.output_path, file_name=settings.days_since_last_log_per_user_graph, title= "Days Since Last Work Log")

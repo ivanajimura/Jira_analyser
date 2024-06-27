@@ -6,3 +6,6 @@ set_path:
 
 freeze-reqs:
 	@pip freeze > requirements.txt
+
+docstr-coverage:
+	@docstr-coverage /home/ivan/Documents/Jira_analyser/src --skip-file-doc
